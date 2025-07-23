@@ -10,11 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+# 指定静态文件收集目录，通常叫 staticfiles 或 static_root
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -23,11 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!ih98o8wu&07comn-zae@hgxbh06w57wctj73g_2jq&dq^_@$&"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
-
+ALLOWED_HOSTS = ['124.221.119.15']
 # Application definition
 
 INSTALLED_APPS = [
@@ -74,13 +78,18 @@ WSGI_APPLICATION = "reading_tracker_project.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+   # 'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+     #   'NAME': 'reading_db',  # 数据库名
+      #  'USER': 'root',  # MySQL用户名
+       # 'PASSWORD': '123456',  # MySQL密码
+        #'HOST': '127.0.0.1',  # 数据库地址，本地就是127.0.0.1
+      #  'PORT': '3306',  # 数据库端口，默认是3306
+    #}
+
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reading_db',  # 数据库名
-        'USER': 'root',  # MySQL用户名
-        'PASSWORD': '123456',  # MySQL密码
-        'HOST': '127.0.0.1',  # 数据库地址，本地就是127.0.0.1
-        'PORT': '3306',  # 数据库端口，默认是3306
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
