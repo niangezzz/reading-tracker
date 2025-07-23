@@ -1,0 +1,14 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}添加新书{% endblock %}
+
+{% block content %}
+    <h1>添加一本新书到您的书架</h1>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary mt-3">确认添加</button>
+        <a href="{% url 'book_list' %}" class="btn btn-secondary mt-3">取消</a>
+    </form>
+{% endblock %}

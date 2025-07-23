@@ -1,0 +1,57 @@
+/* tracker/static/tracker/css/custom.css - 最终确认版 */
+
+:root {
+  --primary-purple: #6f42c1;
+  --primary-purple-dark: #5a349b;
+  --primary-purple-light: #e9dff7;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background-color: #f8f9fa; /* 为没有背景图的普通页面提供一个默认背景色 */
+}
+
+/* 专门为带背景图的页面（登录、注册页）准备的样式 */
+body.body-with-bg {
+    /* 使用我们保存在本地的图片 */
+    background-image: url('tracker/static/tracker/images/library_bg.jpg');
+
+    /* 背景图相关的其他设置 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    /* 用于垂直居中的flex布局 */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 美化登录/注册卡片 */
+.login-card {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* --- 主题颜色覆盖 --- */
+/* (这部分是之前修改的紫色主题，保留) */
+.btn-primary {
+    background-color: var(--primary-purple);
+    border-color: var(--primary-purple);
+}
+.btn-primary:hover {
+    background-color: var(--primary-purple-dark);
+    border-color: var(--primary-purple-dark);
+}
+a { color: var(--primary-purple); }
+a:hover { color: var(--primary-purple-dark); }
+.badge.bg-secondary {
+    background-color: var(--primary-purple-light) !important;
+    color: var(--primary-purple-dark) !important;
+}
+.bg-dark {
+    background-color: var(--primary-purple-dark) !important;
+}

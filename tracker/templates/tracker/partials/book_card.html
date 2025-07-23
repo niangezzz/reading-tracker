@@ -1,0 +1,37 @@
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="card-title mb-1">
+                    <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                </h5>
+                <h6 class="card-subtitle text-muted">{{ book.author }}</h6>
+            </div>
+
+            {# --- 新增的删除按钮表单 --- #}
+            {# tracker/templates/tracker/partials/book_card.html 的一部分 #}
+
+            {# 我们不再需要form标签包裹，这个按钮现在是模态框的触发器 #}
+                <button type="button" class="btn-close" aria-label="Close"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteConfirmModal"
+                        data-book-id="{{ book.id }}"
+                        data-book-title="{{ book.title }}">
+                </button>
+        </div>
+
+        {# --- 修改状态的表单保持不变 --- #}
+        <form action="{% url 'change_book_status' book.id %}" method="post" class="mt-2">
+            {% csrf_token %}
+            <div class="input-group input-group-sm">
+                <label class="input-group-text" for="status-select-{{ book.id }}">移动到:</label>
+                <select class="form-select" name="status" id="status-select-{{ book.id }}" onchange="this.form.submit()">
+                    <option value="READING" {% if book.status == 'READING' %}selected{% endif %}>在读</option>
+                    <option value="WANT_TO_READ" {% if book.status == 'WANT_TO_READ' %}selected{% endif %}>想读</option>
+                    <option value="FINISHED" {% if book.status == 'FINISHED' %}selected{% endif %}>已读</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</div>

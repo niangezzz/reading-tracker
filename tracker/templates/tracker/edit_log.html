@@ -1,0 +1,15 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}修改阅读记录{% endblock %}
+
+{% block content %}
+    <h1>修改阅读记录</h1>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary mt-3">保存更改</button>
+        {# 提供一个取消按钮，返回到书籍详情页 #}
+        <a href="{% url 'book_detail' form.instance.book.id %}" class="btn btn-secondary mt-3">取消</a>
+    </form>
+{% endblock %}

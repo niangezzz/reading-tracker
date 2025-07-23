@@ -1,0 +1,74 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}{{ book.title }} - 详情{% endblock %}
+
+{% block content %}
+    <a href="{% url 'book_list' %}" class="btn btn-secondary btn-sm mb-3"><< 返回书架</a>
+
+    {# --- 1. 书籍基本信息卡片 --- #}
+    <div class="card mb-4" data-aos="fade-up">
+        <div class="card-header">
+            <h2>{{ book.title }}</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>作者:</strong> {{ book.author }}</p>
+            <p><strong>总页数:</strong> {{ book.total_pages }}</p>
+            <p><strong>当前状态:</strong> <span class="badge bg-info">{{ book.get_status_display }}</span></p>
+        </div>
+    </div>
+
+    {# --- 2. 添加新阅读记录的表单卡片 --- #}
+    <div class="card mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card-header">
+            <h3>添加新的阅读记录</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success mt-2">提交记录</button>
+            </form>
+        </div>
+    </div>
+
+    {# --- 3. 现有阅读记录列表卡片 --- #}
+    <div class="card" data-aos="fade-up" data-aos-delay="200">
+        <div class="card-header">
+            <h3>我的阅读记录</h3>
+        </div>
+        <ul class="list-group list-group-flush">
+            {% for log in reading_logs %}
+                <li class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-1"><strong>日期:</strong> {{ log.log_date|date:"Y年n月j日" }}</h6>
+                            <p class="mb-1">
+                                <strong>阅读范围:</strong> {{ log.start_page }} - {{ log.end_page }} 页
+                                <span class="text-muted">(共 {{ log.pages_read_count }} 页)</span>
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{% url 'edit_log' log.id %}" class="btn btn-outline-secondary btn-sm">修改</a>
+                            <form action="{% url 'delete_log' log.id %}" method="post" class="d-inline ms-1">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('您确定要永久删除这条记录吗？');">
+                                    删除
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {# --- 这是修正笔记显示的关键部分 --- #}
+                    {% if log.notes %}
+                    <p class="mt-2 mb-1"><strong>笔记:</strong></p>
+                         <div class="text-muted" style="white-space: pre-wrap; background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+                            {{ log.notes }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li class="list-group-item">您还没有为这本书添加任何阅读记录。</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
